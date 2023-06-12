@@ -33,8 +33,10 @@ app.post("/api/notes", (req, res) => {
             title,
             text
         };
+        //Convert newNote object to string
+        const noteString = JSON.stringify(newNote);
 
-        console.log(newNote);
+        console.log(noteString);
     }
 
 });

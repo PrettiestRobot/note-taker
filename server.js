@@ -33,7 +33,10 @@ app.post("/api/notes", (req, res) => {
             title,
             text
         };
+
+        console.log(newNote);
     }
+
 });
 
 app.listen(PORT, () => {

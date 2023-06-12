@@ -6,6 +6,9 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => 
@@ -18,6 +21,20 @@ app.get('/notes', (req, res) =>
 );
 
 app.get("/api/notes", (req, res) => res.json(dbData));
+
+app.post("/api/notes", (req, res) => {
+
+    //Destructure req.body
+    const { title, text } = req.body;
+    // If title and text are present...
+    if (title && text) {
+        //create a variable containing newNote object
+        const newNote = {
+            title,
+            text
+        };
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)

@@ -30,7 +30,7 @@ app.post("/api/notes", (req, res) => {
   if (title && text) {
     //create a variable containing newNote object
     const newNote = {
-      id: uuidv4(),
+      // id: uuidv4(),
       title,
       text,
     };

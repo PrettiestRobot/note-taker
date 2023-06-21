@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const dbData = require("./db/db.json");
 const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
 
 const PORT = process.env.PORT || 3001;
 
@@ -30,7 +29,6 @@ app.post("/api/notes", (req, res) => {
   if (title && text) {
     //create a variable containing newNote object
     const newNote = {
-      // id: uuidv4(),
       title,
       text,
     };

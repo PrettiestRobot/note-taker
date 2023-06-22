@@ -2,6 +2,9 @@ const express = require("express");
 const path = require("path");
 const dbData = require("./db/db.json");
 const fs = require("fs");
+const util = require("util");
+
+const writeFileAsync = util.promisify(fs.writeFile)
 
 const PORT = process.env.PORT || 3001;
 
@@ -27,35 +30,44 @@ app.post("/api/notes", (req, res) => {
   const { title, text } = req.body;
   // If title and text are present...
   if (title && text) {
-    //create a variable containing newNote object
+    // //create a variable containing newNote object
     const newNote = {
       title,
       text,
     };
-    // Retrieve the contents of db.json
-    fs.readFile("./db/db.json", (err, data) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json("Error in reading db.json");
-      }
-      // Save the contents of db.json as a variable and push the newNot object into the array
-      let notes = JSON.parse(data);
-      notes.push(newNote);
+    // // Retrieve the contents of db.json
+    // fs.readFile("./db/db.json", (err, data) => {
+    //   if (err) {
+    //     console.log(err);
+    //     return res.status(500).json("Error in reading db.json");
+    //   }
+    //   // Save the contents of db.json as a variable and push the newNot object into the array
+    //   let notes = JSON.parse(data);
+    //   notes.push(newNote);
 
-      // Stringify and return updated array to db.json
-      fs.writeFile("./db/db.json", JSON.stringify(notes), (err) =>
+    //   // Stringify and return updated array to db.json
+    //   fs.writeFile("./db/db.json", JSON.stringify(notes), (err) =>
+    //     err
+    //       ? console.error(err)
+    //       : console.log(`Note for ${newNote.title} has been added!`)
+    //   );
+
+    //   const response = {
+    //     status: "success",
+    //     body: newNote,
+    //   };
+    //   console.log(response);
+    //   res.status(201).json(response);
+    // });
+
+    console.log(dbData);
+    dbData.push(newNote);
+    console.log(dbData);
+      fs.writeFile("./db/db.json", JSON.stringify(dbData), (err) =>
         err
           ? console.error(err)
           : console.log(`Note for ${newNote.title} has been added!`)
       );
-
-      const response = {
-        status: "success",
-        body: newNote,
-      };
-      console.log(response);
-      res.status(201).json(response);
-    });
   } else {
     res.status(500).json("Error in posting note");
   }

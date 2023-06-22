@@ -68,6 +68,7 @@ app.post("/api/notes", (req, res) => {
           ? console.error(err)
           : console.log(`Note for ${newNote.title} has been added!`)
       );
+    res.json(dbData)
   } else {
     res.status(500).json("Error in posting note");
   }

@@ -3,7 +3,9 @@ const path = require("path");
 const dbData = require("./db/db.json");
 const fs = require("fs");
 const util = require("util");
+const { v4: uuidv4 } = require("uuid");
 
+//use the promisify util method to treat fs.writefile as a promise. Prevents the post method from finishing until the file is written. 
 const writeFileAsync = util.promisify(fs.writeFile)
 
 const PORT = process.env.PORT || 3001;
@@ -34,7 +36,9 @@ app.post("/api/notes", (req, res) => {
     const newNote = {
       title,
       text,
+      id: uuidv4()
     };
+
     // // Retrieve the contents of db.json
     // fs.readFile("./db/db.json", (err, data) => {
     //   if (err) {
@@ -60,9 +64,12 @@ app.post("/api/notes", (req, res) => {
     //   res.status(201).json(response);
     // });
 
-    console.log(dbData);
+    // console.log(dbData);
+
+    //push the new note to dbData
     dbData.push(newNote);
-    console.log(dbData);
+
+    // console.log(dbData);
       fs.writeFile("./db/db.json", JSON.stringify(dbData), (err) =>
         err
           ? console.error(err)
